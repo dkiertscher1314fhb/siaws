@@ -1,0 +1,61 @@
+// This is the gradle build file for the program that deploy the wikikpedics 
+// webapplication to the amazon aws cloud.
+// These file contains all the configuration options, that are needed by gradle
+
+// plugins for the development
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+apply plugin: 'jacoco'
+
+// default properties
+version = '0.0.1-SNAPSHOT'
+group = 'de.fhb.systemintegration.wikipedics'
+
+// properties for java
+sourceCompatibility = 1.7
+
+// repositories
+repositories {
+	mavenCentral()
+}
+
+// needed dependencies of the project
+dependencies {
+	checkstyle 'checkstyle:checkstyle:5.0'
+	findbugs 'com.google.code.findbugs:findbugs:2.0.2'
+	pmd 'pmd:pmd:4.3'
+	jacocoAnt'org.jacoco:org.jacoco.ant:0.6.3.201306030806'
+	jacocoAgent 'org.jacoco:org.jacoco.agent:0.6.3.201306030806'
+	compile 'com.amazonaws:aws-java-sdk:1.6.4'
+	testCompile 'junit:junit:4.11'
+	testCompile 'info.cukes:cucumber-java:1.1.5'
+    testCompile 'info.cukes:cucumber-junit:1.1.5'
+}
+
+// Custom Junit-Testphase
+test {
+    maxParallelForks = 5
+    forkEvery = 50
+    include '**/Test*.*'
+    exclude '**/TestRunner*.*'
+    exclude '**/StepDefinitions*.*'
+}
+
+// Custom Integration-Testphase
+task(integrationtest, type: Test, dependsOn: test) {
+    description = 'Runs the integration tests.'
+    include '**/IT*.*'
+    exclude '**/TestRunner*.*'
+    exclude '**/StepDefinitions*.*'
+}
+
+// Special Testphase to run the cucumber-tests
+task(systemtest, type: Test, dependsOn: integrationtest) {
+    description = 'Runs the system tests.'
+    include '**/TestRunner*.*'
+    reports.junitXml.enabled = false
+    reports.html.enabled = false
+}
