@@ -9,10 +9,14 @@ apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
+apply plugin: 'application'
 
 // default properties
 version = '0.0.1-SNAPSHOT'
 group = 'de.fhb.systemintegration.wikipedics'
+
+// properties for the application plugin
+mainClassName = 'de.fhb.systemintegration.wikipedics.AWSApplication'
 
 // properties for java
 sourceCompatibility = 1.7
