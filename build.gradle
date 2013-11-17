@@ -59,3 +59,18 @@ task(systemtest, type: Test, dependsOn: integrationtest) {
     reports.junitXml.enabled = false
     reports.html.enabled = false
 }
+
+// customize the default code quality tasks
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+tasks.withType(Pmd) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
