@@ -1,4 +1,4 @@
 siaws
 =====
 
-Deploy auf Server der Amazon Web Services
+Deploy wikipedics application on the Amazon AWS Cloud
