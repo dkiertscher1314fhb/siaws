@@ -6,7 +6,7 @@ Feature: Enter the access key over the commandline
 
   Scenario Outline: Enter an accesskey
     Given an running test application
-    When the user enter "accesskey=<key>"
+    When the user enter "changeCredentials accesskey=<key>"
     Then the user should get the message "<message>"
 
     Examples: Too short

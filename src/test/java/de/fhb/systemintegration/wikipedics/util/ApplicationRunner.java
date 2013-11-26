@@ -9,7 +9,6 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 
 /**
  * This class is a special test runner, that runs the real application.
@@ -22,16 +21,8 @@ import java.nio.charset.Charset;
  * @author mlelansky
  * @version 0.0.1
  */
-public final class ApplicationRunner {
+public final class ApplicationRunner implements AutoCloseable {
 
-    /**
-     * This field defines the max retry count to fetch the output messages.
-     */
-    private static final int MAX_RETRIES = 20;
-    /**
-     * This field defines the sleep time of the threads.
-     */
-    private static final long MAX_SLEEP_TIME = 100L;
     /**
      * This stream connect the outputStream with System.in .
      */
@@ -56,10 +47,7 @@ public final class ApplicationRunner {
      * This is the backup of System.out .
      */
     private PrintStream systemoutBackup;
-    /**
-     * This is the default charset used for conversation.
-     */
-    private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+
 
     /**
      * This is the default constructor of the this test runner class.
@@ -75,7 +63,7 @@ public final class ApplicationRunner {
 
             this.byteArrayOutputStream = new ByteArrayOutputStream();
             this.printStream = new PrintStream(this.byteArrayOutputStream,
-                    true, DEFAULT_CHARSET.name());
+                    true, Config.DEFAULT_CHARSET.name());
             this.systemoutBackup = System.out;
             System.setOut(this.printStream);
         } catch (IOException e) {
@@ -105,7 +93,7 @@ public final class ApplicationRunner {
      */
     public void setUserInput(final String input) {
         try {
-            this.outputStream.write(input.getBytes(Charset.forName("UTF-8")));
+            this.outputStream.write(input.getBytes(Config.DEFAULT_CHARSET));
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
             close();
@@ -118,12 +106,12 @@ public final class ApplicationRunner {
      */
     public String getDisplayed() {
         String result = "";
-        int tries = MAX_RETRIES;
+        int tries = Config.MAX_RETRIES;
         try {
             while (tries > 0 && result.length() <= 0) {
-                Thread.sleep(MAX_SLEEP_TIME);
+                Thread.sleep(Config.MAX_SLEEP_TIME);
                 result = this.byteArrayOutputStream.toString(
-                        DEFAULT_CHARSET.name());
+                        Config.DEFAULT_CHARSET.name());
                 tries--;
             }
         } catch (InterruptedException e) {
