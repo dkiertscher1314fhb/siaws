@@ -14,6 +14,6 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources/de/fhb/systemintegration/"
 + "wikipedics/cucumber/features", format = { "pretty", "html:build/cucumber" })
-public class TestRunner {
+public class CucumberTestSuite {
 
 }

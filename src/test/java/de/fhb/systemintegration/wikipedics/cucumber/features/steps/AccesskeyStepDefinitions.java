@@ -36,7 +36,7 @@ public final class AccesskeyStepDefinitions {
      */
     @Given("^an running test application$")
     public void startTestApplication() {
-        runner.startApplication();
+        this.runner.startApplication();
     }
 
     /**
@@ -45,7 +45,7 @@ public final class AccesskeyStepDefinitions {
      */
     @When("^the user enter \"([^\"]*)\"$")
     public void enterAccesskey(final String key) {
-        runner.setUserInput(key);
+        this.runner.setUserInput(key);
     }
 
     /**
@@ -54,7 +54,8 @@ public final class AccesskeyStepDefinitions {
      */
     @Then("^the user should get the message \"([^\"]*)\"$")
     public void validateMessage(final String message) {
-        Assert.assertEquals(message, runner.getDisplayed());
+        Assert.assertEquals("The message should be identical.", message,
+                this.runner.getDisplayed());
     }
 
     /**

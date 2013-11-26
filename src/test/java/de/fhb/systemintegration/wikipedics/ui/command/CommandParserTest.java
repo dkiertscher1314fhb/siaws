@@ -22,7 +22,8 @@ public final class CommandParserTest {
     public void checkEmptyCommands() {
         Map<String, Map<String, String>> commandMap = new HashMap<>();
         List<Command> commandList = CommandParser.parse(commandMap);
-        Assert.assertTrue(commandList.isEmpty());
+        Assert.assertTrue("No commands should be parsed.",
+                commandList.isEmpty());
     }
 
     /**
@@ -33,6 +34,7 @@ public final class CommandParserTest {
         Map<String, Map<String, String>> commandMap = new HashMap<>();
         commandMap.put("changeCredentials", new HashMap<String, String>());
         List<Command> commandList = CommandParser.parse(commandMap);
-        Assert.assertEquals(1, commandList.size());
+        Assert.assertEquals("One command should be parsed.",
+                1L, commandList.size());
     }
 }

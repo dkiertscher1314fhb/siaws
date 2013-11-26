@@ -32,11 +32,11 @@ public final class CommandParser {
         for (Map.Entry<String, Map<String, String>> entry
                 : commandMap.entrySet()) {
             try {
-                Command command = getCommand(entry.getKey(), entry.getValue());
+                Command command = CommandParser.getCommand(entry.getKey(),
+                        entry.getValue());
                 commands.add(command);
             } catch (ClassNotFoundException e) {
                 System.err.println(e);
-                continue;
             }
         }
         return commands;

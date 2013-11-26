@@ -68,7 +68,7 @@ public final class ApplicationRunner implements AutoCloseable {
             System.setOut(this.printStream);
         } catch (IOException e) {
             System.err.println(e.getLocalizedMessage());
-            close();
+            this.close();
         }
     }
 
@@ -96,7 +96,7 @@ public final class ApplicationRunner implements AutoCloseable {
             this.outputStream.write(input.getBytes(Config.DEFAULT_CHARSET));
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
-            close();
+            this.close();
         }
     }
 
@@ -106,17 +106,15 @@ public final class ApplicationRunner implements AutoCloseable {
      */
     public String getDisplayed() {
         String result = "";
-        int tries = Config.MAX_RETRIES;
         try {
+            int tries = Config.MAX_RETRIES;
             while (tries > 0 && result.length() <= 0) {
                 Thread.sleep(Config.MAX_SLEEP_TIME);
                 result = this.byteArrayOutputStream.toString(
                         Config.DEFAULT_CHARSET.name());
                 tries--;
             }
-        } catch (InterruptedException e) {
-            System.err.println(e.getLocalizedMessage());
-        } catch (UnsupportedEncodingException e) {
+        } catch (InterruptedException | UnsupportedEncodingException e) {
             System.err.println(e.getLocalizedMessage());
         }
         return result;
@@ -125,6 +123,7 @@ public final class ApplicationRunner implements AutoCloseable {
     /**
      * This method closed opened stream.
      */
+    @Override
     public void close() {
         try {
             if (this.inputStream != null) {

@@ -86,6 +86,7 @@ public class InputStreamWrapper implements AutoCloseable {
             }
         } catch (IOException e) {
             System.err.println("The streams couldn't successfully closed.");
+            System.err.println(e.getLocalizedMessage());
         }
     }
 
@@ -94,7 +95,7 @@ public class InputStreamWrapper implements AutoCloseable {
      * @return the actual used InputStream
      */
     public final InputStream getInputStream() {
-        return inputStream;
+        return this.inputStream;
     }
 
     /**

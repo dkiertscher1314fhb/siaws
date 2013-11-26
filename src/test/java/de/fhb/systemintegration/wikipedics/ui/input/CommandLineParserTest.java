@@ -24,7 +24,7 @@ public final class CommandLineParserTest {
      */
     @Before
     public void setUp() {
-        parser = new CommandLineParser();
+        this.parser = new CommandLineParser();
     }
 
     /**
@@ -34,8 +34,9 @@ public final class CommandLineParserTest {
     public void checkNullCommand() {
         final String command = "";
         Map<String, Map<String, String>> parsedLine =
-                parser.parse(command);
-        Assert.assertTrue(parsedLine.isEmpty());
+                this.parser.parse(command);
+        Assert.assertTrue("No command should be parsed.",
+                parsedLine.isEmpty());
     }
 
     /**
@@ -45,8 +46,9 @@ public final class CommandLineParserTest {
     public void checkOneCommand() {
         final String command = "help";
         Map<String, Map<String, String>> parsedLine =
-                parser.parse(command);
-        Assert.assertTrue(parsedLine.containsKey("help"));
+                this.parser.parse(command);
+        Assert.assertTrue("One command should be parsed.",
+                parsedLine.containsKey("help"));
     }
 
     /**
@@ -56,8 +58,9 @@ public final class CommandLineParserTest {
     public void checkTwoCommands() {
         final String commands = "help changeCredentials";
         Map<String, Map<String, String>> parsedLine =
-                parser.parse(commands);
-        Assert.assertTrue(parsedLine.containsKey("changeCredentials"));
+                this.parser.parse(commands);
+        Assert.assertTrue("Two commands should be parsed.",
+                parsedLine.containsKey("changeCredentials"));
     }
 
     /**
@@ -67,9 +70,10 @@ public final class CommandLineParserTest {
     public void checkOneCommandAndOneOption() {
         final String command = "changeCredentials accesskey=12345";
         Map<String, Map<String, String>> parseLine =
-                parser.parse(command);
+                this.parser.parse(command);
         Map<String, String> changeCredentials =
                 parseLine.get("changeCredentials");
-        Assert.assertTrue(changeCredentials.containsKey("accesskey"));
+        Assert.assertTrue("One command and one options should be parsed.",
+                changeCredentials.containsKey("accesskey"));
     }
 }

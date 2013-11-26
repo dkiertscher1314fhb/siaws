@@ -22,18 +22,18 @@ public class CommandLineParser implements Parser {
             final String commandline) {
         final Map<String, Map<String, String>> result = new HashMap<>();
         if (commandline != null && !commandline.isEmpty()) {
-            String[] chunks = splitList(commandline);
+            String[] chunks = this.splitList(commandline);
             int i = 0;
             String actualCommand = "";
             while (i < chunks.length) {
-                if (!chunks[i].contains("=")) {
-                    actualCommand = chunks[i];
-                    result.put(chunks[i], new HashMap<String, String>());
-                } else {
+                if (chunks[i].contains("=")) {
                     if (actualCommand != null && !actualCommand.isEmpty()) {
                         result.get(actualCommand).putAll(
-                                splitOption(chunks[i]));
+                                this.splitOption(chunks[i]));
                     }
+                } else {
+                    actualCommand = chunks[i];
+                    result.put(chunks[i], new HashMap<String, String>());
                 }
                 i++;
             }
@@ -48,8 +48,7 @@ public class CommandLineParser implements Parser {
      */
     private String[] splitList(final String commandLine) {
         String parseLine = commandLine.trim();
-        String[] chunks = parseLine.split(DELIMITER_PATTERN);
-        return chunks;
+        return parseLine.split(CommandLineParser.DELIMITER_PATTERN);
     }
 
     /**

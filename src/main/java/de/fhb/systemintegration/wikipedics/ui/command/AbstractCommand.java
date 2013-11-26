@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author mlelansky
  * @version 0.0.1
  */
-public abstract class AbstractCommand implements Command {
+abstract class AbstractCommand implements Command {
 
     /**
      * The name of the actual command.
@@ -29,7 +29,7 @@ public abstract class AbstractCommand implements Command {
      * @param _name the name of the command
      * @param _description the description of the command
      */
-    public AbstractCommand(final String _name, final String _description) {
+    AbstractCommand(final String _name, final String _description) {
         this(_name, _description, new HashMap<String, String>(0));
     }
 
@@ -39,7 +39,7 @@ public abstract class AbstractCommand implements Command {
      * @param _description the description of the command
      * @param _options the options of the command
      */
-    public AbstractCommand(final String _name, final String _description,
+    AbstractCommand(final String _name, final String _description,
                            final Map<String, String> _options) {
         this.name = _name;
         this.description = _description;
@@ -64,8 +64,8 @@ public abstract class AbstractCommand implements Command {
 
     @Override
     public final void doAction() {
-        if (checkOptions()) {
-            action();
+        if (this.checkOptions()) {
+            this.action();
         }
     }
 

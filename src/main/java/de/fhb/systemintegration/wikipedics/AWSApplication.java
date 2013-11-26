@@ -18,7 +18,7 @@ public final class AWSApplication {
      * This is the entry point of the application.
      * @param args the commandline arguments
      */
-    public static void main(final String[] args) {
+    public static void main(final String... args) {
     }
 
 

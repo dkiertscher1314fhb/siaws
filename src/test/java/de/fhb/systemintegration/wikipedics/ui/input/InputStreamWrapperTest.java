@@ -42,8 +42,9 @@ public final class InputStreamWrapperTest {
     public void checkAutoCloseable() throws Exception {
         Class<?>[] interfaces = this.wrapper.getClass().getInterfaces();
         List<Class<?>> interfaceList = Arrays.asList(interfaces);
-        Assert.assertThat(interfaceList,
-                CoreMatchers.hasItem(AutoCloseable.class));
+        Assert.assertThat("The class should be implements the "
+                + "AutoCloseable-Interface.", interfaceList,
+        CoreMatchers.hasItem(AutoCloseable.class));
     }
 
     /**
@@ -53,7 +54,8 @@ public final class InputStreamWrapperTest {
      */
     @Test
     public void checkInputStreamCreation() throws Exception {
-        Assert.assertEquals(System.in, this.wrapper.getInputStream());
+        Assert.assertEquals("The System.in-Stream should be associated.",
+                System.in, this.wrapper.getInputStream());
     }
 
     /**
@@ -67,7 +69,8 @@ public final class InputStreamWrapperTest {
                 hello.getBytes(Config.DEFAULT_CHARSET));
         final InputStreamWrapper inputStreamWrapper =
                 new InputStreamWrapper(stream);
-        Assert.assertEquals(stream, inputStreamWrapper.getInputStream());
+        Assert.assertEquals("The custom-stream should be associated.",
+                stream, inputStreamWrapper.getInputStream());
     }
 
     /**
@@ -76,7 +79,8 @@ public final class InputStreamWrapperTest {
      */
     @Test
     public void checkInputStreamReaderCreation() throws Exception {
-        Assert.assertNotNull(this.wrapper.getReader());
+        Assert.assertNotNull("The reader should be successfully created.",
+                this.wrapper.getReader());
     }
 
     /**
@@ -85,7 +89,8 @@ public final class InputStreamWrapperTest {
      */
     @Test
     public void checkBufferedReaderCreation() throws Exception {
-        Assert.assertNotNull(this.wrapper.getBufferedReader());
+        Assert.assertNotNull("The BufferedReader should be "
+                + "successfully created.", this.wrapper.getBufferedReader());
     }
 
     /**
@@ -95,7 +100,8 @@ public final class InputStreamWrapperTest {
     @Test
     public void checkInputStreamClosed() throws Exception {
         this.wrapper.close();
-        Assert.assertNull(this.wrapper.getInputStream());
+        Assert.assertNull("The InputStream should be successfully closed.",
+                this.wrapper.getInputStream());
     }
 
     /**
@@ -105,7 +111,8 @@ public final class InputStreamWrapperTest {
     @Test
     public void checkReaderClosed() throws Exception {
         this.wrapper.close();
-        Assert.assertNull(this.wrapper.getReader());
+        Assert.assertNull("The Reader should be successfully closed." ,
+                this.wrapper.getReader());
     }
 
     /**
@@ -115,7 +122,8 @@ public final class InputStreamWrapperTest {
     @Test
     public void checkBufferedReaderClosed() throws Exception {
         this.wrapper.close();
-        Assert.assertNull(this.wrapper.getBufferedReader());
+        Assert.assertNull("The BufferedReader should be successfully closed.",
+                this.wrapper.getBufferedReader());
     }
 
     /**
@@ -130,7 +138,8 @@ public final class InputStreamWrapperTest {
         final InputStreamWrapper inputStreamWrapper =
                 new InputStreamWrapper(inputStream);
         final String result = inputStreamWrapper.readLine();
-        Assert.assertEquals(hello, result);
+        Assert.assertEquals("The actual and the read line should be the same.",
+                hello, result);
         inputStreamWrapper.close();
         inputStream.close();
     }
@@ -142,7 +151,7 @@ public final class InputStreamWrapperTest {
     public void checkDoNotReadAfterClose() {
         this.wrapper.close();
         final String result = this.wrapper.readLine();
-        Assert.assertTrue(result.isEmpty());
+        Assert.assertTrue("The stream should be closed.", result.isEmpty());
     }
 
     /**
