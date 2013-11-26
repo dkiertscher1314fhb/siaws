@@ -86,7 +86,9 @@
         <module name="MemberName"/>
         <module name="MethodName"/>
         <module name="PackageName"/>
-        <module name="ParameterName"/>
+        <module name="ParameterName">
+            <property name="format" value="^[a-z_][a-zA-Z0-9]*$" />
+        </module>
         <module name="StaticVariableName"/>
         <module name="TypeName"/>
 

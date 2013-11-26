@@ -15,11 +15,24 @@ apply plugin: 'application'
 version = '0.0.1-SNAPSHOT'
 group = 'de.fhb.systemintegration.wikipedics'
 
+// properties for the code analyze tools
+checkstyle.toolVersion='5.6'
+findbugs.toolVersion='2.0.2'
+pmd.toolVersion='5.0.5'
+
+
 // properties for the application plugin
 mainClassName = 'de.fhb.systemintegration.wikipedics.AWSApplication'
 
 // properties for java
 sourceCompatibility = 1.7
+
+// configure the jar creation
+jar {
+	manifest {
+		attributes("Implementatation-Title": baseName, "Implementation-Version": version, "Main-Class": mainClassName, "Class-Path":".")
+	}
+}
 
 // repositories
 repositories {
@@ -28,9 +41,6 @@ repositories {
 
 // needed dependencies of the project
 dependencies {
-	checkstyle 'checkstyle:checkstyle:5.0'
-	findbugs 'com.google.code.findbugs:findbugs:2.0.2'
-	pmd 'pmd:pmd:4.3'
 	jacocoAnt'org.jacoco:org.jacoco.ant:0.6.3.201306030806'
 	jacocoAgent 'org.jacoco:org.jacoco.agent:0.6.3.201306030806'
 	compile 'com.amazonaws:aws-java-sdk:1.6.4'
