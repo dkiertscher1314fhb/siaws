@@ -26,6 +26,28 @@ mainClassName = 'de.fhb.systemintegration.wikipedics.AWSApplication'
 // properties for java
 sourceCompatibility = 1.7
 
+// properties for the jacocoplugin
+jacoco {
+	toolVersion = '0.6.3.201306030806'
+	reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+	group = 'Reporting'
+	description = 'Generate Jacoco coverage reports after running tests.'
+	reports {
+		xml {
+			enabled true
+			destination "${buildDir}/reports/jacoco/xml"
+		}
+		csv.enabled false
+		html {
+			destination "${buildDir}/reports/jacoco/html"
+			enabled true
+		}
+	}
+}
+
 // configure the jar creation
 jar {
 	manifest {
@@ -40,8 +62,6 @@ repositories {
 
 // needed dependencies of the project
 dependencies {
-	jacocoAnt'org.jacoco:org.jacoco.ant:0.6.3.201306030806'
-	jacocoAgent 'org.jacoco:org.jacoco.agent:0.6.3.201306030806'
 	compile 'com.amazonaws:aws-java-sdk:1.6.4'
 	testCompile 'junit:junit:4.11'
 	testCompile 'info.cukes:cucumber-java:1.1.5'
@@ -52,15 +72,20 @@ dependencies {
 test {
     maxParallelForks = 5
     forkEvery = 50
-    include '**/Test*.*'
+    exclude '**/IT*.*'
     exclude '**/CucumberTestSuite*.*'
     exclude '**/StepDefinitions*.*'
+    jacoco {
+	append = false
+	destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+	classDumpFile = file("$buildDir/jacoco/classpathdumps")
+    }
 }
 
 // Custom Integration-Testphase
 task(integrationtest, type: Test, dependsOn: test) {
     description = 'Runs the integration tests.'
-    include '**/IT*.*'
+    exclude '**/Test*.*'
     exclude '**/CucumberTestSuite*.*'
     exclude '**/StepDefinitions*.*'
 }
@@ -69,6 +94,8 @@ task(integrationtest, type: Test, dependsOn: test) {
 task(systemtest, type: Test, dependsOn: integrationtest) {
     description = 'Runs the system tests.'
     include '**/CucumberTestSuite*.*'
+    exclude '**/Test*.*'
+    exclude '**/IT*.*'
     reports.junitXml.enabled = false
     reports.html.enabled = false
 }
