@@ -1,10 +1,9 @@
 package de.fhb.systemintegration.wikipedics.ui.input;
 
 import de.fhb.systemintegration.wikipedics.util.Config;
-import org.junit.Assert;
 import org.junit.Test;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.After;
 import org.hamcrest.CoreMatchers;
 
 import java.io.ByteArrayInputStream;
@@ -94,6 +93,22 @@ public final class InputStreamWrapperTest {
     }
 
     /**
+     * This method checks that the correct input is read.
+     * @throws Exception if any error occurred
+     */
+    @Test
+    public void checkReadLine() throws Exception {
+        final String hello = "Hello World";
+        final ByteArrayInputStream inputStream = new ByteArrayInputStream(
+                        hello.getBytes(Config.DEFAULT_CHARSET));
+        final InputStreamWrapper inputStreamWrapper =
+                new InputStreamWrapper(inputStream);
+        final String result = inputStreamWrapper.readLine();
+        Assert.assertEquals("The actual and the read line should be the same.",
+                hello, result);
+    }
+
+    /**
      * This method checks that the InputStream is successfully closed.
      * @throws Exception if any error occurred
      */
@@ -124,41 +139,5 @@ public final class InputStreamWrapperTest {
         this.wrapper.close();
         Assert.assertNull("The BufferedReader should be successfully closed.",
                 this.wrapper.getBufferedReader());
-    }
-
-    /**
-     * This method checks that the correct input is read.
-     * @throws Exception if any error occurred
-     */
-    @Test
-    public void checkReadLine() throws Exception {
-        final String hello = "Hello World";
-        final ByteArrayInputStream inputStream = new ByteArrayInputStream(
-                        hello.getBytes(Config.DEFAULT_CHARSET));
-        final InputStreamWrapper inputStreamWrapper =
-                new InputStreamWrapper(inputStream);
-        final String result = inputStreamWrapper.readLine();
-        Assert.assertEquals("The actual and the read line should be the same.",
-                hello, result);
-        inputStreamWrapper.close();
-        inputStream.close();
-    }
-
-    /**
-     * This method checks that nobody can read after the streams are closed.
-     */
-    @Test
-    public void checkDoNotReadAfterClose() {
-        this.wrapper.close();
-        final String result = this.wrapper.readLine();
-        Assert.assertTrue("The stream should be closed.", result.isEmpty());
-    }
-
-    /**
-     * This method cleans the test.
-     */
-    @After
-    public void teardown() {
-        this.wrapper.close();
     }
 }

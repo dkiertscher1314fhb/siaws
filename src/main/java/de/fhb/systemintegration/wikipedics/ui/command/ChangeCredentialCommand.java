@@ -1,7 +1,10 @@
 package de.fhb.systemintegration.wikipedics.ui.command;
 
+import de.fhb.systemintegration.wikipedics.business.inter.CredentialManager;
+import de.fhb.systemintegration.wikipedics.business.inter.CredentialViewer;
+import de.fhb.systemintegration.wikipedics.domain.UserSettings;
+
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * This class stands for the command to change the credentials.
@@ -9,14 +12,12 @@ import java.util.HashMap;
  * @author mlelansky
  * @version 0.0.1
  */
-public class ChangeCredentialCommand extends AbstractCommand {
+class ChangeCredentialCommand extends AbstractCommand {
 
     /**
-     * This is the default constructor of the command.
+     * This constant defines the access key length.
      */
-    public ChangeCredentialCommand() {
-        this(new HashMap<String, String>());
-    }
+    private static final int ACCESSKEY_LENGTH = 20;
 
     /**
      * This is the initialisation constructor of the command.
@@ -28,17 +29,42 @@ public class ChangeCredentialCommand extends AbstractCommand {
     }
 
     @Override
-    protected final boolean checkOptions() {
+    protected final boolean checkOptions(final Long userId) {
         boolean status = false;
-        if (this.getOptions().containsKey("accesskey")
-                || this.getOptions().containsKey("secretkey")) {
-            status = true;
+        if (this.getOptions().containsKey("accesskey") && userId > 0) {
+            final String accesskey = this.getOptions().get("accesskey");
+            if (accesskey != null && !accesskey.isEmpty()) {
+                if (accesskey.length() == ACCESSKEY_LENGTH) {
+                    status = true;
+                } else {
+                    status = false;
+                    if (accesskey.length() < ACCESSKEY_LENGTH) {
+                        this.setMessage("The access key is to short.");
+                    } else {
+                        this.setMessage("The access key is to long.");
+                    }
+                }
+            } else {
+                status = false;
+                this.setMessage("The access key is empty.");
+            }
+        } else {
+            status = false;
+            this.setMessage("You give no changed credentials.");
         }
         return status;
     }
 
     @Override
-    protected final void action() {
-
+    protected final void action(final Long userId) {
+        CredentialViewer viewer = this.getBuilder().getCredentialViewer();
+        CredentialManager manager = this.getBuilder().getCredentialManager();
+        UserSettings settings = viewer.findById(userId);
+        if (this.getOptions().containsKey("accesskey")
+                && !this.getOptions().get("accesskey").isEmpty()) {
+            settings.setAccesskey(this.getOptions().get("accesskey"));
+        }
+        manager.updateCredential(settings);
+        this.setMessage("The access key is successfully updated.");
     }
 }

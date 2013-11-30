@@ -17,7 +17,10 @@ group = 'de.fhb.systemintegration.wikipedics'
 
 // properties for the code analyze tools
 checkstyle.toolVersion='5.6'
-findbugs.toolVersion='2.0.2'
+findbugs {
+    toolVersion='2.0.2'
+    excludeFilter = file("$rootProject.projectDir/config/findbugs/findbugs-exclude.xml")
+}
 pmd.toolVersion='5.0.5'
 
 // properties for the application plugin
@@ -63,41 +66,37 @@ repositories {
 // needed dependencies of the project
 dependencies {
 	compile 'com.amazonaws:aws-java-sdk:1.6.4'
-	testCompile 'junit:junit:4.11'
-	testCompile 'info.cukes:cucumber-java:1.1.5'
-    testCompile 'info.cukes:cucumber-junit:1.1.5'
+	compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.1'
+    compile    'com.h2database:h2:1.3.174'
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.hamcrest:hamcrest-core:1.3'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+
 }
 
 // Custom Junit-Testphase
 test {
     maxParallelForks = 5
     forkEvery = 50
+    exclude '**/ST*.*'
     exclude '**/IT*.*'
-    exclude '**/CucumberTestSuite*.*'
-    exclude '**/StepDefinitions*.*'
     jacoco {
-	append = false
-	destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
-	classDumpFile = file("$buildDir/jacoco/classpathdumps")
+	    append = false
+	    destinationFile = file("$buildDir/jacoco/jacocoTest.exec")
+	    classDumpFile = file("$buildDir/jacoco/classpathdumps")
     }
 }
 
 // Custom Integration-Testphase
 task(integrationtest, type: Test, dependsOn: test) {
     description = 'Runs the integration tests.'
-    exclude '**/Test*.*'
-    exclude '**/CucumberTestSuite*.*'
-    exclude '**/StepDefinitions*.*'
+    include '**/IT*.*'
 }
 
 // Special Testphase to run the cucumber-tests
 task(systemtest, type: Test, dependsOn: integrationtest) {
     description = 'Runs the system tests.'
-    include '**/CucumberTestSuite*.*'
-    exclude '**/Test*.*'
-    exclude '**/IT*.*'
-    reports.junitXml.enabled = false
-    reports.html.enabled = false
+    include '**/ST*.*'
 }
 
 // customize the default code quality tasks

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<FindBugsFilter>
+    <Match>
+        <Bug pattern="DMI_CONSTANT_DB_PASSWORD" />
+        <Package name="de.fhb.systemintegration.wikipedics.dao.inter" />
+    </Match>
+
+</FindBugsFilter>

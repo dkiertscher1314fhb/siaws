@@ -32,4 +32,14 @@ public final class Config {
      */
     public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
+    /**
+     * This is the tcp-port-option for the h2-tcp-server.
+     */
+    public static final String TCP_PORT_OPTION = "-tcpPort";
+
+    /**
+     * This is the used tcp-port.
+     */
+    public static final String TCP_PORT = "8888";
+
 }

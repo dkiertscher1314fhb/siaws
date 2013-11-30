@@ -1,5 +1,8 @@
 package de.fhb.systemintegration.wikipedics.ui.command;
 
+import de.fhb.systemintegration.wikipedics.business.builder.BusinessBuilder;
+import de.fhb.systemintegration.wikipedics.business.builder.BusinessBuilderImpl;
+
 import java.util.Map;
 import java.util.HashMap;
 
@@ -25,6 +28,16 @@ abstract class AbstractCommand implements Command {
     private final Map<String, String> options;
 
     /**
+     * The builder instance.
+     */
+    private BusinessBuilder builder;
+
+    /**
+     * If some errors occurred.
+     */
+    private String message;
+
+    /**
      * This is the initialisation constructor of the command.
      * @param _name the name of the command
      * @param _description the description of the command
@@ -44,6 +57,58 @@ abstract class AbstractCommand implements Command {
         this.name = _name;
         this.description = _description;
         this.options = _options;
+        this.builder = new BusinessBuilderImpl();
+        this.message = "";
+    }
+
+    @Override
+    public final void doAction(final Long userId) {
+        if (this.checkOptions(userId)) {
+            this.action(userId);
+        }
+        if (this.getMessage() != null && !this.getMessage().isEmpty()) {
+            System.out.println(this.getMessage());
+        }
+    }
+
+    /**
+     * This method is a callback to checks the needed options of the command.
+     * @param userId the actual user id
+     * @return true if the options are valid
+     */
+    protected abstract boolean checkOptions(final Long userId);
+
+    /**
+     * This method is a callback which contains the logic
+     * that should be executed.
+     * @param userId the actual user id
+     */
+    protected abstract void action(final Long userId);
+
+    @Override
+    public boolean equals(final Object o) {
+        boolean equal = false;
+        if (this == o) {
+            equal = true;
+        } else {
+            if (o instanceof AbstractCommand) {
+                AbstractCommand that = (AbstractCommand) o;
+
+                if (description.equals(that.description)
+                        && name.equals(that.name)) {
+                    equal = true;
+                }
+            }
+        }
+        return equal;
+    }
+
+    @Override
+    public int hashCode() {
+        final int hash = 31;
+        int result = name.hashCode();
+        result = hash * result + description.hashCode();
+        return result;
     }
 
     @Override
@@ -62,23 +127,36 @@ abstract class AbstractCommand implements Command {
         return this.options;
     }
 
-    @Override
-    public final void doAction() {
-        if (this.checkOptions()) {
-            this.action();
-        }
+    /**
+     * This method returns the builder instance.
+     * @return the actual builder.
+     */
+    protected BusinessBuilder getBuilder() {
+        return this.builder;
     }
 
     /**
-     * This method is a callback to checks the needed options of the command.
-     * @return true if the options are valid
+     * This method sets the builder instance.
+     * This method is only used for test.
+     * @param _builder the new builder instance
      */
-    protected abstract boolean checkOptions();
+    protected void setBuilder(final BusinessBuilder _builder) {
+        this.builder = _builder;
+    }
+
+    @Override
+    public final String getMessage() {
+        return this.message;
+    }
 
     /**
-     * This method is a callback which contains the logic
-     * that should be executed.
+     * This method sets the new error message.
+     * @param _message the new error message
      */
-    protected abstract void action();
+    protected void setMessage(final String _message) {
+        if (_message != null) {
+            this.message = _message;
+        }
+    }
 
 }

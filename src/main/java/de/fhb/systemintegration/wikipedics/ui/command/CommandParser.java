@@ -56,6 +56,9 @@ public final class CommandParser {
             case "changeCredentials":
                 actualCommand = new ChangeCredentialCommand(options);
                 break;
+            case "quit":
+                actualCommand = new QuitCommand();
+                break;
             default:
                 throw new ClassNotFoundException(
                 "This command is not yet implemented.");

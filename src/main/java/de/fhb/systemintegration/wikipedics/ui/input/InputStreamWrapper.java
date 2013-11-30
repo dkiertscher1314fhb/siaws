@@ -51,6 +51,7 @@ public class InputStreamWrapper implements AutoCloseable {
 
     /**
      * This method reads one line of the stream.
+     *
      * @return the read line
      */
     public final String readLine() {
@@ -62,11 +63,10 @@ public class InputStreamWrapper implements AutoCloseable {
                 throw new IOException("The BufferedReader are closed.");
             }
         } catch (IOException e) {
-            this.close();
             System.err.println("It could not read a line.");
             System.err.println(e.getLocalizedMessage());
         }
-       return result;
+        return result;
     }
 
     @Override

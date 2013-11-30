@@ -30,7 +30,14 @@ public interface Command {
     Map<String, String> getOptions();
 
     /**
-     * This method is the work of the command without any options.
+     * This method return the actual error message.
+     * @return the error message
      */
-    void doAction();
+    String getMessage();
+
+    /**
+     * This method is the work of the command without any options.
+     * @param userId the actual userId;
+     */
+    void doAction(final Long userId);
 }

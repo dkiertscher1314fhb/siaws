@@ -7,6 +7,7 @@ import org.junit.runners.Suite;
  * This is a test suite which runs all the test of the command package.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ CommandParserTest.class })
+@Suite.SuiteClasses({ CommandParserTest.class,
+        ChangeCredentialCommandTest.class })
 public class CommandTestSuite {
 }
