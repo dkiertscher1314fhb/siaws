@@ -1,6 +1,7 @@
 package de.fhb.systemintegration.wikipedics.ui.command;
 
 import java.util.Map;
+import java.util.List;
 
 /**
  * This interface defined the methods for every commands that can be used
@@ -33,7 +34,7 @@ public interface Command {
      * This method return the actual error message.
      * @return the error message
      */
-    String getMessage();
+    List<String> getMessages();
 
     /**
      * This method is the work of the command without any options.

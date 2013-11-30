@@ -67,7 +67,7 @@ public final class ChangeCredentialCommandTest {
         changeCredentialCommand.setBuilder(this.builder);
         changeCredentialCommand.doAction(1L);
         Assert.assertEquals("You give no changed credentials.",
-                changeCredentialCommand.getMessage());
+                changeCredentialCommand.getMessages().get(0));
     }
 
     /**
@@ -83,7 +83,23 @@ public final class ChangeCredentialCommandTest {
         changeCredentialCommand.setBuilder(this.builder);
         changeCredentialCommand.doAction(1L);
         Assert.assertEquals("The access key is empty.",
-                changeCredentialCommand.getMessage());
+                changeCredentialCommand.getMessages().get(0));
+    }
+
+    /**
+     * This method checks that nobody can execute the command
+     * with an emtpy secret key.
+     */
+    @Test
+    public void checkEmptySecretkey() {
+        Map<String, String> options = new HashMap<>();
+        options.put("secretkey", "");
+        ChangeCredentialCommand changeCredentialCommand =
+                new ChangeCredentialCommand(options);
+        changeCredentialCommand.setBuilder(this.builder);
+        changeCredentialCommand.doAction(1L);
+        Assert.assertEquals("The secret key is empty.",
+                changeCredentialCommand.getMessages().get(0));
     }
 
     /**
@@ -99,8 +115,25 @@ public final class ChangeCredentialCommandTest {
         changeCredentialCommand.setBuilder(this.builder);
         changeCredentialCommand.doAction(1L);
         Assert.assertEquals("The access key is to short.",
-                changeCredentialCommand.getMessage());
+                changeCredentialCommand.getMessages().get(0));
     }
+
+    /**
+     * This method checks that nobody can execute the command
+     * with a to short secret key.
+     */
+    @Test
+    public void checkToShortSecretkey() {
+        Map<String, String> options = new HashMap<>();
+        options.put("secretkey", "ABCD");
+        ChangeCredentialCommand changeCredentialCommand =
+                new ChangeCredentialCommand(options);
+        changeCredentialCommand.setBuilder(this.builder);
+        changeCredentialCommand.doAction(1L);
+        Assert.assertEquals("The secret key is to short.",
+                changeCredentialCommand.getMessages().get(0));
+    }
+
 
     /**
      * This method checks that nobody can execute the command
@@ -115,7 +148,24 @@ public final class ChangeCredentialCommandTest {
         changeCredentialCommand.setBuilder(this.builder);
         changeCredentialCommand.doAction(1L);
         Assert.assertEquals("The access key is to long.",
-                changeCredentialCommand.getMessage());
+                changeCredentialCommand.getMessages().get(0));
+    }
+
+    /**
+     * This method checks that nobody can execute the command
+     * with a to long secret key.
+     */
+    @Test
+    public void checkToLongSecretkey() {
+        Map<String, String> options = new HashMap<>();
+        options.put("secretkey",
+                "ABCDEF123456ABCDEF78ABCDEFGABCDEF123456ABCDEF78ABCDEFGABC");
+        ChangeCredentialCommand changeCredentialCommand =
+                new ChangeCredentialCommand(options);
+        changeCredentialCommand.setBuilder(this.builder);
+        changeCredentialCommand.doAction(1L);
+        Assert.assertEquals("The secret key is to long.",
+                changeCredentialCommand.getMessages().get(0));
     }
 
     /**
@@ -130,8 +180,22 @@ public final class ChangeCredentialCommandTest {
         changeCredentialCommand.setBuilder(this.builder);
         changeCredentialCommand.doAction(1L);
         Assert.assertEquals("The access key is successfully updated.",
-                changeCredentialCommand.getMessage());
+                changeCredentialCommand.getMessages().get(0));
+    }
 
+    /**
+     * This method check that the access key is updates successfully.
+     */
+    @Test
+    public void checkSuccessSecretkeyChange() {
+        Map<String, String> options = new HashMap<>();
+        options.put("secretkey", "ABCDEF123456ABCDEF78ABCDEF123456ABCDEF78");
+        ChangeCredentialCommand changeCredentialCommand =
+                new ChangeCredentialCommand(options);
+        changeCredentialCommand.setBuilder(this.builder);
+        changeCredentialCommand.doAction(1L);
+        Assert.assertEquals("The secret key is successfully updated.",
+                changeCredentialCommand.getMessages().get(0));
     }
 
 }

@@ -3,6 +3,8 @@ package de.fhb.systemintegration.wikipedics.ui.command;
 import de.fhb.systemintegration.wikipedics.business.builder.BusinessBuilder;
 import de.fhb.systemintegration.wikipedics.business.builder.BusinessBuilderImpl;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -35,7 +37,7 @@ abstract class AbstractCommand implements Command {
     /**
      * If some errors occurred.
      */
-    private String message;
+    private List<String> messages;
 
     /**
      * This is the initialisation constructor of the command.
@@ -58,7 +60,7 @@ abstract class AbstractCommand implements Command {
         this.description = _description;
         this.options = _options;
         this.builder = new BusinessBuilderImpl();
-        this.message = "";
+        this.messages = new ArrayList<>();
     }
 
     @Override
@@ -66,8 +68,10 @@ abstract class AbstractCommand implements Command {
         if (this.checkOptions(userId)) {
             this.action(userId);
         }
-        if (this.getMessage() != null && !this.getMessage().isEmpty()) {
-            System.out.println(this.getMessage());
+        if (this.getMessages() != null && !this.getMessages().isEmpty()) {
+            for (String message: this.getMessages()) {
+                System.out.println(message);
+            }
         }
     }
 
@@ -145,17 +149,17 @@ abstract class AbstractCommand implements Command {
     }
 
     @Override
-    public final String getMessage() {
-        return this.message;
+    public final List<String> getMessages() {
+        return this.messages;
     }
 
     /**
      * This method sets the new error message.
-     * @param _message the new error message
+     * @param _messages the new error message
      */
-    protected void setMessage(final String _message) {
-        if (_message != null) {
-            this.message = _message;
+    protected void setMessages(final List<String> _messages) {
+        if (_messages != null) {
+            this.messages = _messages;
         }
     }
 
