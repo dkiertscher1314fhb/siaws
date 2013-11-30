@@ -22,7 +22,7 @@ public class QuitCommand extends AbstractCommand {
             status = true;
         } else {
             status = false;
-            this.setMessage("The command quit used no options.");
+            this.getMessages().add("The command quit used no options.");
         }
         return status;
     }

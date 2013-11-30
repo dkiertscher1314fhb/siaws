@@ -41,6 +41,20 @@ public final class UserSettingsDAOTest extends AbstractDAOTest {
     }
 
     /**
+     * This method checks if nobody can save an object
+     * with an empty secret key.
+     */
+    @Test
+    public void dontSaveEmptySecretkey() {
+        UserSettings settings = new UserSettings();
+        settings.setRegion("EU-WEST-1");
+        settings.setSecretkey(null);
+        settings.setAccesskey("123ABC");
+        UserSettings result = this.userSettingsDAO.save(settings);
+        Assert.assertNull("The id should be null.", result.getId());
+    }
+
+    /**
      * This method checks if the object is stored successfully.
      */
     @Test
