@@ -11,16 +11,10 @@ import java.util.List;
 public final class CommandExecutor {
 
     /**
-     * This is the actual login user.
-     */
-    private Long userId;
-
-    /**
      * This is the default constructor.
      */
     public CommandExecutor() {
         super();
-        this.userId = Long.valueOf(-1);
     }
 
     /**
@@ -29,7 +23,7 @@ public final class CommandExecutor {
      */
     public void executes(final List<Command> commandList) {
         for (Command command: commandList) {
-            command.doAction(this.userId);
+            command.doAction();
         }
     }
 }

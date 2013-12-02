@@ -85,6 +85,8 @@ abstract class GenericDAOImpl<T, PK> implements GenericDAO<T, PK>,
         this.transaction.begin();
         try {
             this.em.remove(object);
+            this.em.flush();
+            this.transaction.commit();
         } catch (RuntimeException e) {
             if (this.transaction.isActive()) {
                 this.transaction.rollback();

@@ -64,9 +64,9 @@ abstract class AbstractCommand implements Command {
     }
 
     @Override
-    public final void doAction(final Long userId) {
-        if (this.checkOptions(userId)) {
-            this.action(userId);
+    public final void doAction() {
+        if (this.checkOptions()) {
+            this.action();
         }
         if (this.getMessages() != null && !this.getMessages().isEmpty()) {
             for (String message: this.getMessages()) {
@@ -77,17 +77,15 @@ abstract class AbstractCommand implements Command {
 
     /**
      * This method is a callback to checks the needed options of the command.
-     * @param userId the actual user id
      * @return true if the options are valid
      */
-    protected abstract boolean checkOptions(final Long userId);
+    protected abstract boolean checkOptions();
 
     /**
      * This method is a callback which contains the logic
      * that should be executed.
-     * @param userId the actual user id
      */
-    protected abstract void action(final Long userId);
+    protected abstract void action();
 
     @Override
     public boolean equals(final Object o) {

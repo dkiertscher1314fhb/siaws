@@ -42,4 +42,25 @@ public final class Config {
      */
     public static final String TCP_PORT = "8888";
 
+    /**
+     * This is the id of the actual user.
+     */
+    private static Long id = Long.valueOf(-1L);
+
+    /**
+     * This method sets the id of the user.
+     * @param _id the user id
+     */
+    public static void setId(final Long _id) {
+        id = _id;
+    }
+
+    /**
+     * This method returns the actual user id.
+     * @return the actual id
+     */
+    public static Long getId() {
+        return id;
+    }
+
 }

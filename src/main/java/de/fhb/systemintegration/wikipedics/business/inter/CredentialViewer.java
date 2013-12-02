@@ -1,6 +1,6 @@
 package de.fhb.systemintegration.wikipedics.business.inter;
 
-import de.fhb.systemintegration.wikipedics.domain.UserSettings;
+import de.fhb.systemintegration.wikipedics.domain.UserSetting;
 
 /**
  * This interface provide the methods to read the credentials.
@@ -15,5 +15,5 @@ public interface CredentialViewer {
      * @param userId the id of the user
      * @return the actual user object
      */
-    UserSettings findById(final Long userId);
+    UserSetting findById(final Long userId);
 }

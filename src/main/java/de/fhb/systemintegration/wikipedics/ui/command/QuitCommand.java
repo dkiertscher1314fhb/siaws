@@ -16,7 +16,7 @@ public class QuitCommand extends AbstractCommand {
     }
 
     @Override
-    protected final boolean checkOptions(final Long userId) {
+    protected final boolean checkOptions() {
         boolean status = false;
         if (this.getOptions().isEmpty()) {
             status = true;
@@ -28,7 +28,7 @@ public class QuitCommand extends AbstractCommand {
     }
 
     @Override
-    protected final void action(final Long userId) {
+    protected final void action() {
         // Nothing to do only a dummy implementation here.;
     }
 }

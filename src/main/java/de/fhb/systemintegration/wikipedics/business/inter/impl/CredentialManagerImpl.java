@@ -1,7 +1,7 @@
 package de.fhb.systemintegration.wikipedics.business.inter.impl;
 
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialManager;
-import de.fhb.systemintegration.wikipedics.domain.UserSettings;
+import de.fhb.systemintegration.wikipedics.domain.UserSetting;
 import de.fhb.systemintegration.wikipedics.dao.inter.UserSettingsDAO;
 
 /**
@@ -27,12 +27,12 @@ public final class CredentialManagerImpl extends  GenericManager
     }
 
     @Override
-    public UserSettings saveCredentials(final UserSettings settings) {
+    public UserSetting saveCredentials(final UserSetting settings) {
         return this.userSettingsDAO.save(settings);
     }
 
     @Override
-    public UserSettings updateCredential(final UserSettings settings) {
+    public UserSetting updateCredential(final UserSetting settings) {
         return this.userSettingsDAO.update(settings);
     }
 }

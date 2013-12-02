@@ -8,6 +8,6 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ CommandParserTest.class,
-        ChangeCredentialCommandTest.class })
+        ChangeCredentialCommandTest.class, LoginCommandTest.class })
 public class CommandTestSuite {
 }

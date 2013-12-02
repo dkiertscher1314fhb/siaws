@@ -1,6 +1,6 @@
 package de.fhb.systemintegration.wikipedics.business.inter;
 
-import de.fhb.systemintegration.wikipedics.domain.UserSettings;
+import de.fhb.systemintegration.wikipedics.domain.UserSetting;
 
 /**
  * This interface provide the methods to change the credentials.
@@ -15,12 +15,12 @@ public interface CredentialManager {
      * @param settings the new user settings
      * @return the successfully saved instance or an empty object
      */
-    UserSettings saveCredentials(final UserSettings settings);
+    UserSetting saveCredentials(final UserSetting settings);
 
     /**
      * This method update the amazon user settings.
      * @param settings the new user settings
      * @return the successfuly updated object or an empty object
      */
-    UserSettings updateCredential(final UserSettings settings);
+    UserSetting updateCredential(final UserSetting settings);
 }
