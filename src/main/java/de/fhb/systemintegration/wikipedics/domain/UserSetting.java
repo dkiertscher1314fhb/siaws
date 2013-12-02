@@ -12,7 +12,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USERSETTINGS")
-public final class UserSettings {
+public final class UserSetting {
 
     /**
      * This is the minimal access key length.
@@ -46,9 +46,15 @@ public final class UserSettings {
     private String region;
 
     /**
+     * This is the name of the ssh key for the ec2-instances.
+     */
+    @Column(name = "KEYNAME", nullable = false, unique = true)
+    private String keyname;
+
+    /**
      * This is the default constructor.
      */
-    public UserSettings() {
+    public UserSetting() {
         super();
         this.setRegion("EU-WEST-1");
     }
@@ -62,11 +68,19 @@ public final class UserSettings {
     }
 
     /**
+     * This method sets the actual user id.
+     * @param _id the actual user id
+     */
+    public void setId(final Long _id) {
+        this.id = _id;
+    }
+
+    /**
      * This method returns the actual used accesskey.
      * @return the aws accesskey
      */
     public String getAccesskey() {
-        return accesskey;
+        return this.accesskey;
     }
 
     /**
@@ -82,7 +96,7 @@ public final class UserSettings {
      * @return the actual aws secretkey
      */
     public String getSecretkey() {
-        return secretkey;
+        return this.secretkey;
     }
 
     /**
@@ -98,7 +112,7 @@ public final class UserSettings {
      * @return the actual used region.
      */
     public String getRegion() {
-        return region;
+        return this.region;
     }
 
     /**
@@ -107,5 +121,21 @@ public final class UserSettings {
      */
     public void setRegion(final String _region) {
         this.region = _region;
+    }
+
+    /**
+     * This method returns the actual name of the ssh key.
+     * @return the name of the ssh key
+     */
+    public String getKeyname() {
+        return this.keyname;
+    }
+
+    /**
+     * This method sets the new key name of the ssh key.
+     * @param _keyname the new keyname
+     */
+    public void setKeyname(final String _keyname) {
+        this.keyname = _keyname;
     }
 }

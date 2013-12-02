@@ -2,7 +2,7 @@ package de.fhb.systemintegration.wikipedics.business.inter.impl;
 
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialViewer;
 import de.fhb.systemintegration.wikipedics.dao.inter.UserSettingsDAO;
-import de.fhb.systemintegration.wikipedics.domain.UserSettings;
+import de.fhb.systemintegration.wikipedics.domain.UserSetting;
 
 /**
  * This class implements the CredentialViewer interface.
@@ -27,7 +27,7 @@ public final class CredentialViewerImpl extends  GenericManager
     }
 
     @Override
-    public UserSettings findById(final Long userId) {
+    public UserSetting findById(final Long userId) {
         return this.userSettingsDAO.findById(userId);
     }
 }

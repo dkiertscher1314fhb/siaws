@@ -7,7 +7,7 @@
     <persistence-unit name="wikipedics">
         <description>The wikipedics Database</description>
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-        <class>de.fhb.systemintegration.wikipedics.domain.UserSettings</class>
+        <class>de.fhb.systemintegration.wikipedics.domain.UserSetting</class>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:wikipedics" />
             <property name="javax.persistence.jdbc.user" value="wikipedics"/>

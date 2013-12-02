@@ -38,7 +38,6 @@ public interface Command {
 
     /**
      * This method is the work of the command without any options.
-     * @param userId the actual userId;
      */
-    void doAction(final Long userId);
+    void doAction();
 }

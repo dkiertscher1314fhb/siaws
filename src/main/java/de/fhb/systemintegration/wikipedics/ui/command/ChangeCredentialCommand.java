@@ -2,7 +2,8 @@ package de.fhb.systemintegration.wikipedics.ui.command;
 
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialViewer;
-import de.fhb.systemintegration.wikipedics.domain.UserSettings;
+import de.fhb.systemintegration.wikipedics.domain.UserSetting;
+import de.fhb.systemintegration.wikipedics.util.Config;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,17 +15,7 @@ import java.util.Map;
  * @author mlelansky
  * @version 0.0.1
  */
-class ChangeCredentialCommand extends AbstractCommand {
-
-    /**
-     * This constant defines the access key length.
-     */
-    private static final int ACCESSKEY_LENGTH = 20;
-
-    /**
-     * This constant defines the secret key legth.
-     */
-    private static final int SECRETKEY_LENGTH = 40;
+class ChangeCredentialCommand extends AbstractLoginCommand {
 
     /**
      * This is the initialisation constructor of the command.
@@ -36,10 +27,11 @@ class ChangeCredentialCommand extends AbstractCommand {
     }
 
     @Override
-    protected final boolean checkOptions(final Long userId) {
+    protected final boolean checkOptions() {
         boolean status = false;
         if ((this.getOptions().containsKey("accesskey")
-                || this.getOptions().containsKey("secretkey")) && userId > 0) {
+                || this.getOptions().containsKey("secretkey"))
+                && Config.getId() > 0) {
             final String accesskey = this.getOptions().get("accesskey");
             final String secretkey = this.getOptions().get("secretkey");
             if (accesskey != null && verifyKeyInput(accesskey,
@@ -49,48 +41,17 @@ class ChangeCredentialCommand extends AbstractCommand {
                 status = true;
             }
         } else {
-            status = false;
             this.getMessages().add("You give no changed credentials.");
         }
         return status;
     }
 
-    /**
-     * This method checks that the key inputs are valid.
-     * @param key the key input to check
-     * @param keyLength the key length
-     * @param type the key type
-     * @return if the key input is valid
-     */
-    private boolean verifyKeyInput(final String key,
-                                   final int keyLength, final KeyType type) {
-        boolean status;
-        if (!key.isEmpty()) {
-            if (key.length() == keyLength) {
-                status = true;
-            } else {
-                status = false;
-                if (key.length() < keyLength) {
-                    this.getMessages().add("The " + type.getName()
-                            + " is to short.");
-                } else {
-                    this.getMessages().add("The " + type.getName()
-                            + " is to long.");
-                }
-            }
-        } else {
-            status = false;
-            this.getMessages().add("The " + type.getName() + " is empty.");
-        }
-        return status;
-    }
-
     @Override
-    protected final void action(final Long userId) {
+    protected final void action() {
         CredentialViewer viewer = this.getBuilder().getCredentialViewer();
         CredentialManager manager = this.getBuilder().getCredentialManager();
         List<KeyType> changedTypes = new ArrayList<>();
-        UserSettings settings = viewer.findById(userId);
+        UserSetting settings = viewer.findById(Config.getId());
         if (this.getOptions().containsKey("accesskey")
                 && !this.getOptions().get("accesskey").isEmpty()) {
             settings.setAccesskey(this.getOptions().get("accesskey"));
