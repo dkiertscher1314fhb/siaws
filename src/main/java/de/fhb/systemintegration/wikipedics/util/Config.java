@@ -1,6 +1,7 @@
 package de.fhb.systemintegration.wikipedics.util;
 
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class is a configuration class an holds the default values of the hole
@@ -30,7 +31,7 @@ public final class Config {
     /**
      * This is the default charset used for conversation.
      */
-    public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+    public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     /**
      * This is the tcp-port-option for the h2-tcp-server.
@@ -41,6 +42,16 @@ public final class Config {
      * This is the used tcp-port.
      */
     public static final String TCP_PORT = "8888";
+
+    /**
+     * This is the default settings path.
+     */
+    public static final String SETTINGS_PATH  = "settings.properties";
+
+    /**
+     * This is the minimum size of properties file.
+     */
+    public static final int MIN_PROPERITES_SIZE = 4;
 
     /**
      * This is the id of the actual user.

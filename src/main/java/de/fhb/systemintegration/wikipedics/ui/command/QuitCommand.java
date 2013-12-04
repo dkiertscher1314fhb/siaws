@@ -6,7 +6,7 @@ package de.fhb.systemintegration.wikipedics.ui.command;
  * @author mlelansky
  * @version 0.0.1
  */
-public class QuitCommand extends AbstractCommand {
+class QuitCommand extends AbstractCommand {
 
     /**
      * This is the default constructor of the command.
