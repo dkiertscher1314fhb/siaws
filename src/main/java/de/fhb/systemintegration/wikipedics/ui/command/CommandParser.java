@@ -43,6 +43,23 @@ public final class CommandParser {
     }
 
     /**
+     * This method returns an instance of a command object.
+     * @param command the actual command name
+     * @param options the actual command options
+     * @return the command object
+     */
+    public static Command getCommandObject(final String command,
+            final Map<String, String> options) {
+        Command actualCommand = null;
+        try {
+            actualCommand = getCommand(command, options);
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return actualCommand;
+    }
+
+    /**
      * This method converts the command string into a command object.
      * @param command the command string to parse
      * @param options the options that should be used
@@ -55,6 +72,9 @@ public final class CommandParser {
         switch (command) {
             case "changeCredentials":
                 actualCommand = new ChangeCredentialCommand(options);
+                break;
+            case "login":
+                actualCommand = new LoginCommand(options);
                 break;
             case "quit":
                 actualCommand = new QuitCommand();
