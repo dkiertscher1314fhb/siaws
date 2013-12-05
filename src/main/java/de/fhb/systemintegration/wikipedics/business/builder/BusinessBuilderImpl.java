@@ -1,5 +1,8 @@
 package de.fhb.systemintegration.wikipedics.business.builder;
 
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.auth.AWSCredentials;
+import de.fhb.systemintegration.wikipedics.business.inter.BeanstalkManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialViewer;
 
@@ -18,21 +21,22 @@ public final class BusinessBuilderImpl implements BusinessBuilder {
         super();
     }
 
-    /**
-     * This method builds an instance of the credential manager.
-     * @return the created instance
-     */
+
     @Override
     public CredentialManager getCredentialManager() {
         return BusinessManagerBuilder.getCredentialManager();
     }
 
-    /**
-     * This method builds an instance of the credential viewer.
-     * @return the created instance
-     */
     @Override
     public CredentialViewer getCredentialViewer() {
         return BusinessViewerBuilder.getCredentialViewer();
+    }
+
+    @Override
+    public BeanstalkManager getBeanstalkManager(
+            final AWSCredentials credentials, final ClientConfiguration config,
+            final String region) {
+        return BusinessManagerBuilder.getBeanstalkManager(credentials,
+                config, region);
     }
 }

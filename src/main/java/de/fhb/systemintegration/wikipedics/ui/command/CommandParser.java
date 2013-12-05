@@ -76,6 +76,9 @@ public final class CommandParser {
             case "login":
                 actualCommand = new LoginCommand(options);
                 break;
+            case "deploy":
+                actualCommand = new DeployCommand(options);
+                break;
             case "quit":
                 actualCommand = new QuitCommand();
                 break;
