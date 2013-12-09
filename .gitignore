@@ -1,6 +1,26 @@
-pom.xml
-*jar
-/lib/
-/classes/
-/targets/
-.lein-deps-sum
+# This is the gitignore file of the project.
+# All file patterns in this file are used to exclude files
+# from the repository.
+#
+# Author: mlelansky
+# Version: 0.0.1
+
+# exclude the gradle files
+build/
+.gradle/
+
+# exclude the java files
+*.class
+*.jar
+
+# exclude the eclipse files
+*.classpah
+*.project
+.settings/
+bin/
+
+# eclude the idea files
+*.iml
+.idea/
+out/
+
