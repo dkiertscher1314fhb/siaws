@@ -6,24 +6,24 @@ import org.junit.Before;
 import de.fhb.systemintegration.wikipedics.domain.UserSetting;
 
 /**
- * This class is a test case for the UserSettingsDAO class.
+ * This class is a test case for the UserSettingDAO class.
  *
  * @author mlelansky
  * @version 0.0.1
  */
-public final class UserSettingsDAOTest extends AbstractDAOTest {
+public final class UserSettingDAOTest extends AbstractDAOTest {
 
     /**
      * This is the dao interface to test.
      */
-    private UserSettingsDAO userSettingsDAO;
+    private UserSettingDAO userSettingDAO;
 
     /**
      * This method setups every test.
      */
     @Before
     public void setup() {
-        this.userSettingsDAO =  this.getBuilder().getUserSettingsDAO();
+        this.userSettingDAO =  this.getBuilder().getUserSettingDAO();
     }
 
     /**
@@ -37,7 +37,7 @@ public final class UserSettingsDAOTest extends AbstractDAOTest {
         settings.setSecretkey("123ABC");
         settings.setAccesskey(null);
         settings.setKeyname("wikipedics");
-        UserSetting result = this.userSettingsDAO.save(settings);
+        UserSetting result = this.userSettingDAO.save(settings);
         Assert.assertNull("The id should be null.", result.getId());
     }
 
@@ -52,7 +52,7 @@ public final class UserSettingsDAOTest extends AbstractDAOTest {
         settings.setSecretkey(null);
         settings.setAccesskey("123ABC");
         settings.setKeyname("wikipedics");
-        UserSetting result = this.userSettingsDAO.save(settings);
+        UserSetting result = this.userSettingDAO.save(settings);
         Assert.assertNull("The id should be null.", result.getId());
     }
     /**
@@ -66,7 +66,7 @@ public final class UserSettingsDAOTest extends AbstractDAOTest {
         settings.setSecretkey("123ABC");
         settings.setAccesskey("123ABC");
         settings.setKeyname("wikipedics");
-        UserSetting result = this.userSettingsDAO.save(settings);
+        UserSetting result = this.userSettingDAO.save(settings);
         Assert.assertNull("The id should be null.", result.getId());
     }
 
@@ -81,7 +81,7 @@ public final class UserSettingsDAOTest extends AbstractDAOTest {
         settings.setSecretkey("123ABC");
         settings.setAccesskey("123ABC");
         settings.setKeyname(null);
-        UserSetting result = this.userSettingsDAO.save(settings);
+        UserSetting result = this.userSettingDAO.save(settings);
         Assert.assertNull("The id should be null.", result.getId());
     }
 
@@ -95,9 +95,9 @@ public final class UserSettingsDAOTest extends AbstractDAOTest {
         settings.setSecretkey("123ABC");
         settings.setAccesskey("112233AABBCC4455DDEE");
         settings.setKeyname("wikipedics");
-        UserSetting result = this.userSettingsDAO.save(settings);
+        UserSetting result = this.userSettingDAO.save(settings);
         Assert.assertNotNull("The id should be not null.", result.getId());
-        this.userSettingsDAO.delete(settings);
+        this.userSettingDAO.delete(settings);
     }
 
     /**
@@ -110,12 +110,12 @@ public final class UserSettingsDAOTest extends AbstractDAOTest {
         settings.setSecretkey("ABC123");
         settings.setAccesskey("AABBCC4455DDEE112233");
         settings.setKeyname("wikipedics");
-        this.userSettingsDAO.save(settings);
-        final UserSetting result = this.userSettingsDAO.findById(
+        this.userSettingDAO.save(settings);
+        final UserSetting result = this.userSettingDAO.findById(
                 settings.getId());
         Assert.assertEquals("The accesskey should be the same.",
                 result.getAccesskey(), settings.getAccesskey());
-        this.userSettingsDAO.delete(settings);
+        this.userSettingDAO.delete(settings);
     }
 
 }

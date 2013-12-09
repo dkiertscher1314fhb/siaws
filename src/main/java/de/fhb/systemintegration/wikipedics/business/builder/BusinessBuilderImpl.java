@@ -2,9 +2,11 @@ package de.fhb.systemintegration.wikipedics.business.builder;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
-import de.fhb.systemintegration.wikipedics.business.inter.BeanstalkManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialViewer;
+import de.fhb.systemintegration.wikipedics.business.inter.EC2Manager;
+import de.fhb.systemintegration.wikipedics.business.inter.ServerInstanceManager;
+import de.fhb.systemintegration.wikipedics.business.inter.ServerInstanceViewer;
 
 /**
  * This is a utility class which provides the viewer and manager classes.
@@ -33,10 +35,21 @@ public final class BusinessBuilderImpl implements BusinessBuilder {
     }
 
     @Override
-    public BeanstalkManager getBeanstalkManager(
-            final AWSCredentials credentials, final ClientConfiguration config,
-            final String region) {
-        return BusinessManagerBuilder.getBeanstalkManager(credentials,
-                config, region);
+    public EC2Manager getEC2Manager(final AWSCredentials credentials,
+                                    final ClientConfiguration config,
+                                    final String region) {
+        return BusinessManagerBuilder.getEC2Manager(credentials, config,
+                region);
     }
+
+    @Override
+    public ServerInstanceManager getServerInstanceManager() {
+        return BusinessManagerBuilder.getServerInstanceManager();
+    }
+
+    @Override
+    public ServerInstanceViewer getServerInstanceViewer() {
+        return BusinessViewerBuilder.getServerInstanceViewer();
+    }
+
 }

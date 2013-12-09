@@ -7,6 +7,6 @@ import org.junit.runners.Suite;
  * This is a test suite which runs all the test of the dao inte package.
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ UserSettingsDAOTest.class })
+@Suite.SuiteClasses({ UserSettingDAOTest.class, ServerInstanceDAOTest.class })
 public class DAOInterTestSuite {
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table;
  * This class stands for the needed user settings.
  */
 @Entity
-@Table(name = "USERSETTINGS")
+@Table(name = "USERSETTING")
 public final class UserSetting {
 
     /**

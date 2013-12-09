@@ -20,7 +20,7 @@ public interface CredentialManager {
     /**
      * This method update the amazon user settings.
      * @param settings the new user settings
-     * @return the successfuly updated object or an empty object
+     * @return the successfully updated object or an empty object
      */
     UserSetting updateCredential(final UserSetting settings);
 }

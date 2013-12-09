@@ -1,7 +1,7 @@
 package de.fhb.systemintegration.wikipedics.business.inter.impl;
 
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialViewer;
-import de.fhb.systemintegration.wikipedics.dao.inter.UserSettingsDAO;
+import de.fhb.systemintegration.wikipedics.dao.inter.UserSettingDAO;
 import de.fhb.systemintegration.wikipedics.domain.UserSetting;
 
 /**
@@ -16,18 +16,18 @@ public final class CredentialViewerImpl extends  GenericManager
     /**
      * This is the interface to access the dao layer.
      */
-    private final UserSettingsDAO userSettingsDAO;
+    private final UserSettingDAO userSettingDAO;
 
     /**
      * This is the default constructor.
      */
     public CredentialViewerImpl() {
         super();
-        this.userSettingsDAO = this.getBuilder().getUserSettingsDAO();
+        this.userSettingDAO = this.getUserSettingDAO();
     }
 
     @Override
     public UserSetting findById(final Long userId) {
-        return this.userSettingsDAO.findById(userId);
+        return this.userSettingDAO.findById(userId);
     }
 }

@@ -3,7 +3,6 @@ package de.fhb.systemintegration.wikipedics.ui.command;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
 import de.fhb.systemintegration.wikipedics.business.builder.BusinessBuilder;
-import de.fhb.systemintegration.wikipedics.business.inter.BeanstalkManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialViewer;
 import de.fhb.systemintegration.wikipedics.domain.UserSetting;
@@ -31,10 +30,6 @@ public abstract class AbstractCommandTest {
      */
     private CredentialManager credentialManagerMock;
 
-    /**
-     * This is the beanstalk manager mock.
-     */
-    private BeanstalkManager beanstalkManagerMock;
     /**
      * This is the mock of the interface builder.
      */
@@ -64,7 +59,6 @@ public abstract class AbstractCommandTest {
         settings.setKeyname("wikipedics");
         this.credentialManagerMock = Mockito.mock(CredentialManager.class);
         this.credentialViewerMock = Mockito.mock(CredentialViewer.class);
-        this.beanstalkManagerMock = Mockito.mock(BeanstalkManager.class);
         this.builderMock = Mockito.mock(BusinessBuilder.class);
         Mockito.when(this.builderMock.getCredentialManager()).
                 thenReturn(this.credentialManagerMock);
@@ -72,11 +66,6 @@ public abstract class AbstractCommandTest {
                 thenReturn(this.credentialViewerMock);
         AWSCredentials credentials = Mockito.mock(AWSCredentials.class);
         ClientConfiguration config = Mockito.mock(ClientConfiguration.class);
-        Mockito.when(this.builderMock.getBeanstalkManager(credentials, config,
-                BeanstalkConfig.HTTPS_PREFIX
-                        + BeanstalkConfig.BEANSTALK_URL_PREFIX + "eu-west-1"
-                        + BeanstalkConfig.BEANSTALK_URL_POSTFIX)).
-                thenReturn(this.beanstalkManagerMock);
         Mockito.when(this.credentialViewerMock.findById(1L)).
                 thenReturn(this.settings);
     }
@@ -121,11 +110,4 @@ public abstract class AbstractCommandTest {
         return this.options;
     }
 
-    /**
-     * This method returns the mock instance of the BeanstalkManager.
-     * @return the mock instance
-     */
-    protected final BeanstalkManager getBeanstalkManagerMock() {
-        return this.beanstalkManagerMock;
-    }
 }

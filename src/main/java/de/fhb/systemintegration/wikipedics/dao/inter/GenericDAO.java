@@ -1,5 +1,8 @@
 package de.fhb.systemintegration.wikipedics.dao.inter;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * This is an generic dao layer interface. Which defines
  * the generic method for the database access.
@@ -37,4 +40,26 @@ public interface GenericDAO<T, PK> {
      * @return the founded object or an empty object
      */
     T findById(final PK id);
+
+    /**
+     * This method method find a list of entities by a named query
+     * without parameters.
+     * @param query the name of the named query
+     * @return the list of entities
+     */
+    List<T> findByNamedQuery(final String query);
+
+    /**
+     * This method find a list of entities by a named query with parameters.
+     * @param query the name of the named query
+     * @param params the parameters of the query
+     * @return the list of entities
+     */
+    List<T> findByNamedQuery(final String query, final Map<String, ?> params);
+
+    /**
+     * This method returns the all entries of the table.
+     * @return all entries of the table
+     */
+    List<T> findAll();
 }

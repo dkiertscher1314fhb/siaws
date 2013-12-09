@@ -2,12 +2,14 @@ package de.fhb.systemintegration.wikipedics.business.builder;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
-import de.fhb.systemintegration.wikipedics.business.inter.BeanstalkManager;
 import de.fhb.systemintegration.wikipedics.business.inter.CredentialManager;
-import de.fhb.systemintegration.wikipedics.business.inter.impl.
-        BeanstalkManagerImpl;
+import de.fhb.systemintegration.wikipedics.business.inter.EC2Manager;
+import de.fhb.systemintegration.wikipedics.business.inter.ServerInstanceManager;
 import de.fhb.systemintegration.wikipedics.business.inter.impl.
         CredentialManagerImpl;
+import de.fhb.systemintegration.wikipedics.business.inter.impl.EC2ManagerImpl;
+import de.fhb.systemintegration.wikipedics.business.inter.impl.
+        ServerInstanceManagerImpl;
 
 /**
  * This is an utility class which connect the manager interfaces with the
@@ -26,7 +28,7 @@ final class BusinessManagerBuilder {
     }
 
     /**
-     * This method builds an instance of the credential manager.
+     * This method builds an instance of the CredentialManager.
      * @return the created instance
      */
     public static CredentialManager getCredentialManager() {
@@ -34,15 +36,24 @@ final class BusinessManagerBuilder {
     }
 
     /**
-     * This method builds an instance of the beanstalk manager.
-     * @param credentials the amazon credentials
+     * This method creates an instance of the ec2-manager.
+     * @param credentials the aws credentials
      * @param config the client configuration
-     * @param region the region where the application should be deployed
+     * @param region the used region
      * @return the created instance
      */
-    public static BeanstalkManager getBeanstalkManager(
-            final AWSCredentials credentials, final ClientConfiguration config,
-            final String region) {
-        return new BeanstalkManagerImpl(credentials, config, region);
+    public static EC2Manager getEC2Manager(
+            final AWSCredentials credentials,
+            final ClientConfiguration config, final String region) {
+        return new EC2ManagerImpl(credentials, config, region);
     }
+
+    /**
+     * This method builds an instance of the ServerInstanceManager.
+     * @return the created instance
+     */
+    public static ServerInstanceManager getServerInstanceManager() {
+        return new ServerInstanceManagerImpl();
+    }
+
 }

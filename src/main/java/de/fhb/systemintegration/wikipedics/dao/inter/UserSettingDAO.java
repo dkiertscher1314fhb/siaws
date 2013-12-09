@@ -8,5 +8,5 @@ import de.fhb.systemintegration.wikipedics.domain.UserSetting;
  * @author mlelansky
  * @version 0.0.1
  */
-public interface UserSettingsDAO extends GenericDAO<UserSetting, Long> {
+public interface UserSettingDAO extends GenericDAO<UserSetting, Long> {
 }

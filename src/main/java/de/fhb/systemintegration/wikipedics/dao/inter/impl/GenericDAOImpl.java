@@ -2,11 +2,17 @@ package de.fhb.systemintegration.wikipedics.dao.inter.impl;
 
 import de.fhb.systemintegration.wikipedics.dao.inter.GenericDAO;
 
-import javax.persistence.Persistence;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This class implements the GenericDAO interface.
@@ -106,6 +112,37 @@ abstract class GenericDAOImpl<T, PK> implements GenericDAO<T, PK>,
             }
         }
         return object;
+    }
+
+    @Override
+    public List<T> findAll() {
+        List<T> fullList = new ArrayList<>();
+        TypedQuery<? extends List> typedQuery = this.getEntityManager().
+                createQuery("SELECT entity FROM "
+                        + this.getEntityClass().getSimpleName() + " entity",
+                        fullList.getClass());
+        fullList.addAll((Collection<? extends T>) typedQuery.getResultList());
+        return fullList;
+    }
+
+    @Override
+    public List<T> findByNamedQuery(final String query) {
+        return this.findByNamedQuery(query, new HashMap<String, Object>());
+    }
+
+    @Override
+    public List<T> findByNamedQuery(final String query,
+                                       final Map<String, ?> params) {
+        List<T> resultList = new ArrayList<>();
+        TypedQuery<? extends List> typedQuery = this.em.
+                createNamedQuery(query, resultList.getClass());
+        for (Map.Entry<String, ?> entry: params.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            typedQuery.setParameter(key, value);
+        }
+        resultList.addAll((Collection<? extends T>) typedQuery.getResultList());
+        return  resultList;
     }
 
     /**

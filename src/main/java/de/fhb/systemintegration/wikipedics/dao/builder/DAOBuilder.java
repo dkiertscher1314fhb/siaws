@@ -2,10 +2,12 @@ package de.fhb.systemintegration.wikipedics.dao.builder;
 
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.auth.AWSCredentials;
-import de.fhb.systemintegration.wikipedics.dao.inter.BeanstalkDAO;
-import de.fhb.systemintegration.wikipedics.dao.inter.UserSettingsDAO;
-import de.fhb.systemintegration.wikipedics.dao.inter.impl.BeanstalkDAOImpl;
-import de.fhb.systemintegration.wikipedics.dao.inter.impl.UserSettingsDAOImpl;
+import de.fhb.systemintegration.wikipedics.dao.inter.EC2DAO;
+import de.fhb.systemintegration.wikipedics.dao.inter.ServerInstanceDAO;
+import de.fhb.systemintegration.wikipedics.dao.inter.UserSettingDAO;
+import de.fhb.systemintegration.wikipedics.dao.inter.impl.EC2DAOImpl;
+import de.fhb.systemintegration.wikipedics.dao.inter.impl.ServerInstanceImpl;
+import de.fhb.systemintegration.wikipedics.dao.inter.impl.UserSettingDAOImpl;
 
 /**
  * This is a utility class which provides the dao interfaces
@@ -24,23 +26,32 @@ public final class DAOBuilder {
     }
 
     /**
-     * This method builds an instance of the UserSettingsDAO.
-     * @return the UserSettingsDAO
+     * This method builds an instance of the UserSettingDAO.
+     * @return the UserSettingDAO
      */
-    public UserSettingsDAO getUserSettingsDAO() {
-        return new UserSettingsDAOImpl();
+    public UserSettingDAO getUserSettingDAO() {
+        return new UserSettingDAOImpl();
     }
 
     /**
-     * This method builds an instance of the BeanstalkDAO.
-     * @param credentials the amazon aws credentials
-     * @param config the client configuration
-     * @param region the region where the app should be deployed
-     * @return the BeanstalkDAO
+     * This method create an instance of the EC2DAO interface.
+     * @param credentials the aws credentials
+     * @param config the http configuration
+     * @param region the region to use
+     * @return the created instance
      */
-    public BeanstalkDAO getBeanstalkDAO(final AWSCredentials credentials,
-                                        final ClientConfiguration config,
-                                        final String region) {
-        return new BeanstalkDAOImpl(credentials, config, region);
+    public EC2DAO getEC2DAO(final AWSCredentials credentials,
+                            final ClientConfiguration config,
+                            final String region) {
+        return new EC2DAOImpl(credentials, config, region);
     }
+
+    /**
+     * This method builds an instance of the ServerInstanceDAO.
+     * @return the ServerInstanceDAO
+     */
+    public ServerInstanceDAO getServerInstanceDAO() {
+        return new ServerInstanceImpl();
+    }
+
 }

@@ -8,6 +8,8 @@
         <description>The wikipedics Database</description>
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>de.fhb.systemintegration.wikipedics.domain.UserSetting</class>
+        <class>de.fhb.systemintegration.wikipedics.domain.ServerInstance</class>
+        <mapping-file>jpa/named-queries.xml</mapping-file>
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:wikipedics" />
             <property name="javax.persistence.jdbc.user" value="wikipedics"/>
